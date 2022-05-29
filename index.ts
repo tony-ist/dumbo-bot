@@ -10,22 +10,10 @@ async function run(): Promise<void> {
   console.log('Initializing discord client...')
 
   const discordClient = new Discord.Client({
-    partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
     intents: [
-      INTENTS.DIRECT_MESSAGES,
-      INTENTS.GUILDS,
-      INTENTS.GUILD_MESSAGES,
-      INTENTS.GUILD_PRESENCES,
-      INTENTS.GUILD_MESSAGE_REACTIONS,
-      INTENTS.GUILD_VOICE_STATES,
-    ],
+      INTENTS.GUILD_VOICE_STATES
+    ]
   })
-
-  // const discordClient = new Discord.Client({
-  //   intents: [
-  //     INTENTS.GUILD_VOICE_STATES
-  //   ]
-  // })
 
   await discordClient.login(config.discordApiToken)
 
