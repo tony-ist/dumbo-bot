@@ -1,0 +1,17 @@
+{
+  "name": "dumbo-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "author": "ReFruity",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node": "^10.8.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.2"
+  }
+}
