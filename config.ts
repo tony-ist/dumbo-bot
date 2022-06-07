@@ -20,6 +20,9 @@ interface Config {
   guildId: string
   discordApiToken: string
   channelIdToJoin: string
+  audioPath: string
+  repeatTimes: number
+  pauseMs: number
 }
 
 export default config

@@ -1,13 +1,12 @@
-import { AudioPlayerStatus, VoiceConnection } from '@discordjs/voice'
 import * as discordJsVoice from '@discordjs/voice'
+import { AudioPlayerStatus, VoiceConnection } from '@discordjs/voice'
 import fs from 'fs'
-
-const audioPath = './yes.mp3'
+import config from './config'
 
 export async function playAudio(connection: VoiceConnection) {
   return await new Promise<void>((resolve, reject) => {
     console.log('Playing audio...')
-    const resource = discordJsVoice.createAudioResource(fs.createReadStream(audioPath))
+    const resource = discordJsVoice.createAudioResource(fs.createReadStream(config.audioPath))
     const player = discordJsVoice.createAudioPlayer()
     connection.subscribe(player)
     player.play(resource)
@@ -18,6 +17,7 @@ export async function playAudio(connection: VoiceConnection) {
       console.log('Audio player is playing')
     })
     player.on(AudioPlayerStatus.Idle, () => {
+      console.log('Audio player stopped playing')
       resolve()
     })
     player.on('error', (error) => {

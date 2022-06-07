@@ -1,8 +1,9 @@
 import Discord from 'discord.js'
 import * as discordJsVoice from '@discordjs/voice'
-import config from './config.json'
+import config from './config'
 import { playAudio } from './play-audio'
 import { DiscordGatewayAdapterCreator } from '@discordjs/voice'
+import { setTimeout as sleep } from 'node:timers/promises'
 
 async function run(): Promise<void> {
   const INTENTS = Discord.Intents.FLAGS
@@ -26,7 +27,6 @@ async function run(): Promise<void> {
   }
 
   const channels = await guild.channels.fetch()
-  console.log(channels)
 
   const voiceChannel = guild.channels.resolve(config.channelIdToJoin)
 
@@ -37,12 +37,21 @@ async function run(): Promise<void> {
   const connection = discordJsVoice.joinVoiceChannel({
     channelId: config.channelIdToJoin,
     guildId: config.guildId,
+    // https://github.com/discordjs/discord.js/issues/7273#issuecomment-1140522858
     adapterCreator: guild.voiceAdapterCreator as DiscordGatewayAdapterCreator,
   })
 
   console.log('Joined voice channel')
 
-  await playAudio(connection)
+  for (let i = 0; i < config.repeatTimes; i++) {
+    await playAudio(connection)
+
+    await sleep(config.pauseMs)
+  }
+
+  console.log('Exiting')
+
+  process.exit(0)
 }
 
 run().catch(console.error)

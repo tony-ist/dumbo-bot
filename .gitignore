@@ -59,6 +59,7 @@ jspm_packages/
 samples/
 credentials/
 dist/
+audio/
 config.json
 .env
 .DS_Store
